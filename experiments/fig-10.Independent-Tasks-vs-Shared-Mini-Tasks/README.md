@@ -1,3 +1,4 @@
+First, curl the environment needed for the experiment: `curl https://ccl.cse.nd.edu/temp/package.tar.gz --output package.tar.gz`
 To run this experiment, 50 workers should be allocated, each with 4 cores. Then, run the executables `./vine_example_ponchoMinitask` and `./vine_example_NoMiniTask`
 Once executed, there will be directories named `vine_example_ponchoMINITASK_info` and `vine_example_ponchoMINITASK_info`.
 Whithin each, there are subdirectories, named with the startime of each execution.
