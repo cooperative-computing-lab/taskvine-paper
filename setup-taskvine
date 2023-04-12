@@ -1,0 +1,64 @@
+#! /bin/bash
+
+set -e
+
+decho () {
+    echo "$@" 1>&2
+}
+
+verbose () {
+    echo "$@"
+    "$@"
+    return $?
+}
+
+find_conda () {
+    if which mamba >& /dev/null
+    then
+        which mamba
+    elif which xconda >& /dev/null
+    then
+        which conda
+    elif [[ -x ${HOME}/miniconda3/bin/conda ]]
+    then
+        echo ${HOME}/miniconda3/bin/conda
+    else
+        decho "Could not find conda."
+        decho "Please install conda from: https://docs.conda.io/en/latest/miniconda.html"
+        decho "or make sure that it can be found in your PATH"
+
+        exit 1
+    fi
+}
+
+create_environment () {
+    conda_exe="$1"
+    path_env="$2"
+    spec="$3"
+
+    if [[ -d ${path_env} ]]
+    then
+        action=update
+    else
+        action=create
+    fi
+
+    echo "${action%?}ing environment..."
+
+	verbose $conda_exe env ${action} -p ${path_env} -f ${spec}
+    return $?
+}
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+ENVIRONMENT="${SCRIPT_DIR}/taskvine-env"
+
+CONDA=$(find_conda)
+
+if ! create_environment "${CONDA}" "${ENVIRONMENT}" environment.yml
+then
+    decho "Could not create/update environment!"
+fi
+
+echo "TaskVine installed succesfully."
+echo "cd to experiments/fig-* directories to reproduce the paper's results"
+
