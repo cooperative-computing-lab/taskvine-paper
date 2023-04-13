@@ -58,7 +58,7 @@ with all the same tasks on the worker.""",
         nargs="?",
         type=int,
         help="the number of tasks to generate.",
-        default=5,
+        default=10,
     )
     parser.add_argument(
         "--name",
@@ -72,7 +72,7 @@ with all the same tasks on the worker.""",
         nargs="?",
         type=int,
         help="port for the manager to listen for connections. If 0, pick any available.",
-        default=0,
+        default=9123,
     )
     args = parser.parse_args()
 

@@ -4,3 +4,5 @@ channels:
 dependencies:
   - python=3.10
   - ndcctools=7.5.1
+  - matplotlib
+  - pandas
