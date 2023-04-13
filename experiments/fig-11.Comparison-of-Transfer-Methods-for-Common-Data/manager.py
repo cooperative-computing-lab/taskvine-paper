@@ -27,14 +27,14 @@ Each task gets a url as an input, uncompresses it and lists the contents.
         nargs="?",
         type=int,
         help="the number of workers to wait for connection before dispatching tasks.",
-        default=3,
+        default=2,
     )
     parser.add_argument(
         "--name",
         nargs="?",
         type=str,
         help="name to assign to the manager.",
-        default=f"vine-blast-{getpass.getuser()}",
+        default=f"vine-transfers-{getpass.getuser()}",
     )
     parser.add_argument(
         "--port",

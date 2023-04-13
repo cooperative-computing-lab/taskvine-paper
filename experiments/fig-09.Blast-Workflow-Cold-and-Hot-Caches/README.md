@@ -144,7 +144,7 @@ node have. For example, for nodes that have 64 cores, you can submit a single
 worker as:
 
 ```sh
-sbatch --job-name wqWorker --ntasks=1 --nodes=1  --cpus-per-task 64 --mem 0 --time 2:00:00 --account=ACCOUNT -- <<EOF
+sbatch --job-name vine_worker --ntasks=1 --nodes=1  --cpus-per-task 64 --mem 0 --time 2:00:00 --account=ACCOUNT -- <<EOF
 #!/bin/sh
 vine_worker --cores 64 -M vine-blast-$USER
 EOF
@@ -166,7 +166,7 @@ For plotting we are interested in the transactions log:
 
 
 ```sh
-vine_plot_txn_log vine-run-info/most-recent/vine-logs/transactions.log output.pdf
+vine_plot_txn_log vine-run-info/most-recent/vine-logs/transactions output.pdf
 ```
 
 To reproduce the figures in the paper, you can run:  
