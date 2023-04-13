@@ -7,6 +7,13 @@ The experiment is divided in two. First we will show a smaller run with a local
 worker to make sure that everything is working correctly. Then we will show how
 to run at scale to reproduce the results in the paper.
 
+## To reproduce the figures in the paper, you can run:  
+
+```sh
+utils/plot_txn_log_as_in_paper paper_results/a.cold-cache.transactions cold.pdf
+utils/plot_txn_log_as_in_paper paper_results/b.hot-cache.transactions hot.pdf
+```
+
 ## Small Run
 
 For this experiment you will need two terminals on the same host. In the first
@@ -167,12 +174,5 @@ For plotting we are interested in the transactions log:
 
 ```sh
 vine_plot_txn_log vine-run-info/most-recent/vine-logs/transactions output.pdf
-```
-
-To reproduce the figures in the paper, you can run:  
-
-```sh
-utils/plot_txn_log_as_in_paper paper_results/a.cold-cache.transactions cold.pdf
-utils/plot_txn_log_as_in_paper paper_results/b.hot-cache.transactions hot.pdf
 ```
 
