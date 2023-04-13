@@ -19,7 +19,7 @@ import sys
 import random
 
 # Permitted letters in an amino acid sequence
-amino_letters="ACGTUiRYKMSWBDHVN"
+amino_letters = "ACGTUiRYKMSWBDHVN"
 
 # Number of characters in each query
 query_length = 128
@@ -30,19 +30,20 @@ query_count = 16
 # Number of tasks to generate
 task_count = 1000
 
-# Create a query string consisting of
-# {query_count} sequences of {query_length} characters.
 
 def make_query_text():
-    return "".join(
-        ">query\n"+"".join(
-            random.choice(amino_letters)
-            for x in range(query_length))+"\n"
-        for y in range(query_count)
-        )
+    """ Create a query string consisting of {query_count} sequences of {query_length} characters. """
+    queries = []
+    for i in range(query_count):
+        query = "".join(random.choices(amino_letters, k=query_length))
+        queries.append(query)
+    return ">query\n" + "\n".join(queries) + "\n"
+
 
 if __name__ == "__main__":
     m = vine.Manager()
+    m.enable_peer_transfers()
+
     print(f"TaskVine listening on {m.port}")
 
     print(f"Declaring files...")
@@ -53,27 +54,24 @@ if __name__ == "__main__":
     landmark_url = m.declare_url("https://ftp.ncbi.nlm.nih.gov/blast/db/landmark.tar.gz", cache=True)
     landmark = m.declare_untar(landmark_url)
 
-    m.enable_peer_transfers()
-
-    print(f"Declaring tasks...")
-
+    print("Declaring tasks...")
     for i in range(task_count):
         query = m.declare_buffer(make_query_text())
-       t = vine.Task(
-            command = "blastdir/ncbi-blast-2.13.0+/bin/blastp -db landmark -query query.file",
-            inputs = {
-              query : {"remote_name" : "query.file", "cache" : False},
-              blast : {"remote_name" : "blastdir", "cache" : True},
-              landmark : {"remote_name" : "landmark", "cache" : True}
+        t = vine.Task(
+            command="blastdir/ncbi-blast-2.13.0+/bin/blastp -db landmark -query query.file",
+            inputs={
+                    query: {"remote_name": "query.file"},
+                    blast: {"remote_name": "blastdir"},
+                    landmark: {"remote_name": "landmark"},
             },
-            env = {"BLASTDB" : "landmark"},
-            cores = 1
+            env={"BLASTDB": "landmark"},
+            cores=1
         )
 
         task_id = m.submit(t)
         print(f"submitted task {t.id}: {t.command}")
 
-    print("waiting for tasks to complete...")
+    print("Waiting for tasks to complete...")
     while not m.empty():
         t = m.wait(5)
         if t:
