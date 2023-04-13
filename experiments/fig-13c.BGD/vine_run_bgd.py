@@ -21,20 +21,23 @@ import json
 import numpy as np
 import random
 import argparse
+import getpass
 
-# this is the function we will pack into a Library Task.
-# arguments:
-# train_data:       List of data to train a model with simple linear regression
-#                   with polynomial basis functions
-# test_data:        List of data to test the fit of the model
-# number_of_params: the number of parameters/basis functions in the model
-# max_iterations:   maximum number of iterations of weight updates to perform
-# min_error:        continue training until the difference in error between
-#                   iterations is less than this value - or max_iterations is reached.
-# learning_rate:    how much to update the weights each iteration
-#
-# It returns the optimized set of weights
+
 def batch_gradient_descent(train_data, test_data, number_of_params, max_iterations, min_error, learning_rate):
+    """ This is the function we will pack into a Library Task.
+        arguments:
+        train_data:       List of data to train a model with simple linear regression
+                        with polynomial basis functions
+        test_data:        List of data to test the fit of the model
+        number_of_params: the number of parameters/basis functions in the model
+        max_iterations:   maximum number of iterations of weight updates to perform
+        min_error:        continue training until the difference in error between
+                        iterations is less than this value - or max_iterations is reached.
+        learning_rate:    how much to update the weights each iteration
+
+        It returns the optimized set of weights """
+
     # Note that we import the python modules again inside the function. This is
     # because this function will be executed remotely independent from this
     # current python program.
@@ -58,7 +61,6 @@ def batch_gradient_descent(train_data, test_data, number_of_params, max_iteratio
     # initial randomized w matrix
     w_initial = np.matrix([[random.random()] for x in range(number_of_params)])
 
-
     # calculuate the RMS error of the set of weights passed in the argument and return it
     def calculate_error(w_i):
         return 1 / 2 * (phi @ w_i - observed_values).T @ (phi @ w_i - observed_values)
@@ -79,8 +81,8 @@ def batch_gradient_descent(train_data, test_data, number_of_params, max_iteratio
     return [w_next.tolist(), calculate_error(w_next).item()]
 
 
-def main(number_of_params, max_iterations, min_error, learning_rate, num_tasks):
-    m = vine.Manager(name="coprocess")
+def main(name, port, number_of_params, max_iterations, min_error, learning_rate, num_tasks):
+    m = vine.Manager(name=name, port=port)
     print("listening on port", m.port)
 
     # enable peer transfers to speed up Library environment delivery
@@ -90,7 +92,7 @@ def main(number_of_params, max_iterations, min_error, learning_rate, num_tasks):
     t = m.create_library_from_functions("gradient_descent_library", batch_gradient_descent)
 
     # specify resources used by Library Task
-    # install the Library Task on all workers that will connected to the manager 
+    # install the Library Task on all workers that will connected to the manager
     t.set_cores(1)
     t.set_disk(0)
     t.set_memory(0)
@@ -100,10 +102,10 @@ def main(number_of_params, max_iterations, min_error, learning_rate, num_tasks):
     # can change the function to perform a regression of different functions,
     # or even input other kinds of data
     x_data = np.linspace(0, 1, 100)
-    t_data = np.sin(x_data*2*np.pi) + np.random.normal(loc=0, scale=0.1, size=x_data.shape)
+    t_data = np.sin(x_data * 2 * np.pi) + np.random.normal(loc=0, scale=0.1, size=x_data.shape)
 
     # split data into training and test data
-    data = np.column_stack((x_data,t_data))
+    data = np.column_stack((x_data, t_data))
     train_data = []
     test_data = []
     for i in range(len(data)):
@@ -136,28 +138,30 @@ def main(number_of_params, max_iterations, min_error, learning_rate, num_tasks):
 
     print("waiting for tasks to complete...")
     while not m.empty():
-            t = m.wait(5)
-            if t:
-                try:
-                    weights, error = json.loads(t.output)["Result"]
-                    if error < best_error:
-                        best_weights = weights
-                        best_error = error
-                except:
-                    print(f"Error reading result of task {t.task_id}")
+        t = m.wait(5)
+        if t:
+            try:
+                weights, error = json.loads(t.output)["Result"]
+                if error < best_error:
+                    best_weights = weights
+                    best_error = error
+            except Exception:
+                print(f"Error reading result of task {t.task_id}")
     print(f"The best weights are: {best_weights}")
     print(f"With an RMS error of {best_error}")
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-            prog="vine_example_gradient_descent.py",
-            description="This shows an example of using Library Tasks and FunctionCall Tasks. Gradient descent is an algorithm used to optimize the weights of machine learning models and regressions.")
 
-    parser.add_argument('--params',     nargs='?', type=int, help='the number of parameters/basis functions in the model', default=100);
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(prog="vine_example_gradient_descent.py",
+                                     description="""This shows an example of using Library Tasks and FunctionCall Tasks.
+Gradient descent is an algorithm used to optimize the weights of machine learning models and regressions.""")
+    parser.add_argument('--name', nargs='?', type=str, help='name to assign to the manager.', default=f'vine-bgd-{getpass.getuser()}',)
+    parser.add_argument('--port', nargs='?', type=int, help='port for the manager to listen for connections. If 0, pick any available.', default=9123,)
+    parser.add_argument('--params', nargs='?', type=int, help='the number of parameters/basis functions in the model', default=100)
     parser.add_argument('--iterations', nargs='?', type=int, help='maximum number of iterations of weight updates to perform', default=100000000)
     parser.add_argument('--error', nargs='?', type=float, help='stop when the fit error is less than this value', default=1e-02)
     parser.add_argument('--rate', nargs='?', type=float, help='how much to update the weights each iteration', default=0.0005)
     parser.add_argument('--tasks', nargs='?', type=int, help='number of tasks to run', default=20)
     args = parser.parse_args()
 
-    main(args.params, args.iterations, args.error, args.rate, args.tasks)
+    main(args.name, args.port, args.params, args.iterations, args.error, args.rate, args.tasks)
