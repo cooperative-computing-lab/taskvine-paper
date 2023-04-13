@@ -25,11 +25,8 @@ amino_letters = "ACGTUiRYKMSWBDHVN"
 # Number of characters in each query
 query_length = 128
 
-# Number of queries in each task.
-query_count = 16
 
-
-def make_query_text():
+def make_query_text(query_count):
     """ Create a query string consisting of {query_count} sequences of {query_length} characters. """
     queries = []
     for i in range(query_count):
@@ -61,6 +58,13 @@ with all the same tasks on the worker.""",
         default=10,
     )
     parser.add_argument(
+        "--query-count",
+        nargs="?",
+        type=int,
+        help="the number of queries to generate per task.",
+        default=16,
+    )
+    parser.add_argument(
         "--name",
         nargs="?",
         type=str,
@@ -74,14 +78,29 @@ with all the same tasks on the worker.""",
         help="port for the manager to listen for connections. If 0, pick any available.",
         default=9123,
     )
+    parser.add_argument(
+        "--disable-peer-transfers",
+        action='store_true',
+        help="disable transfers among workers.",
+        default=False
+    )
+    parser.add_argument(
+        "--max-concurrent-transfers",
+        nargs="?",
+        type=int,
+        help="maximum number of concurrent peer transfers",
+        default=3,
+    )
     args = parser.parse_args()
 
     m = vine.Manager(port=args.port)
     m.set_name(args.name)
-    m.enable_peer_transfers()
+
+    if not args.disable_peer_transfers:
+        m.enable_peer_transfers()
+        m.tune("worker-source-max-transfers", args.max_concurrent_transfers)
 
     print("Declaring files...")
-
     blast_url = m.declare_url(
         "https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.13.0+-x64-linux.tar.gz",
         cache="always",  # with "always", workers keep this file until they are terminated
@@ -97,7 +116,7 @@ with all the same tasks on the worker.""",
 
     print("Declaring tasks...")
     for i in range(args.task_count):
-        query = m.declare_buffer(make_query_text())
+        query = m.declare_buffer(make_query_text(args.query_count))
         t = vine.Task(
             command="blastdir/ncbi-blast-2.13.0+/bin/blastp -db landmark -query query.file",
             inputs={
