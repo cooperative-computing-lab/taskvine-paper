@@ -7,7 +7,7 @@ The experiment is divided in two. First we will show a smaller run with a local
 worker to make sure that everything is working correctly. Then we will show how
 to run at scale to reproduce the results in the paper.
 
-## Quick Run
+## Small Run
 
 For this experiment you will need two terminals on the same host. In the first
 terminal we will execute the manager, and in the second a local worker. In **both**
@@ -81,7 +81,7 @@ has the data.
 At this point you can terminate the worker by pressing control-c.
 
 
-## Long Run
+## Large Run (between 2 and 5min)
 
 To reproduce the run presented in the paper you will need access to a batch
 system that will let you run 100 4-core workers. Each batch job will run a
@@ -119,7 +119,9 @@ To run the complete experiment, run:
 vine_example_blast.py --task-count 1000
 ```
 
-and submit 100 workers.
+and submit 100 workers. The run with cold cache should complete in 5min once the batch system schedules the workers.
+
+Once the run finishes, re-run it to test the hot cache. It should run in about 2min.
 
 
 
