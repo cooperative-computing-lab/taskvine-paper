@@ -3,8 +3,8 @@
 This experiment shows three different transfers modes of files in TaskVine:
 
 - All workers fetching an input file from the same URL.
-- Workers transfering the input file among themselves with a strict control from the manager.
-- Workers transfering the input file among themselves with a loose control from the manager.
+- Workers transferring the input file among themselves with a strict control from the manager.
+- Workers transferring the input file among themselves with a loose control from the manager.
 
 The experiment is divided in two. First we will show a smaller run with a local
 worker to make sure that everything is working correctly. Then we will show how
@@ -30,7 +30,7 @@ execute local workers. In the **three** terminals you will need to activate the
 conda environment:
 
 ```sh
-conda activate $(realpath ../../taskvine-env)
+source ../../taskvine-env/bin/activate
 ```
 
 If you get an error, please make sure that you executed the `setup-taskvine`
@@ -95,19 +95,23 @@ system that will let you run 500 1-core workers. Each batch job will run a
 single worker such as:
 
 ```sh
+source ../../taskvine-env/bin/activate
+
 # 1 cores, 12 GB of memory and disk
 vine_worker --cores 1 --memory 12000 --disk 12000 IP_OF_MANAGER PORT_OF_MANAGER
 ```
 
-Alternatevely, you can use the catalog server service provided by the
+Alternatively, you can use the catalog server service provided by the
 University of Notre Dame, and use:
 
 ```sh
+source ../../taskvine-env/bin/activate
+
 # 1 cores, 12 GB of memory and disk
 vine_worker --cores 1 --memory 12000 --disk 12000 -M MANAGER_NAME
 ```
 
-where `MANAGER_NAME` is by default `vine-transfers-$USER`. You can change this name
+Where `MANAGER_NAME` is by default `vine-transfers-$USER`. You can change this name
 by running `python manager.py --name some-other-manager-name`.
 
 
@@ -121,20 +125,27 @@ python manager.py --worker-count 500 --max-concurrent-transfers 9999
 python manager.py --worker-count 500 --max-concurrent-transfers 3
 ```
 
-and submit 500 1-core workers to your batch system. Each run should finish in
+Submit 500 1-core workers to your batch system. Each run should finish in
 about a minute once the batch system provides workers.
 
-### Example Of Submission File To HTCondor
 
-The file `1_core-condor.submit` show how to submit a worker to a generic HTCondor
-pool. Modify the `arguments` line to match the name or IP address of your
-manager. To request 500 workers, change `queue 1` to `queue 500`.
+### Example Of Submissions To HTCondor
 
-And then run:
+If your HTCondor does not have special requirements, the generic script
+provided may help you to submit the workers required, as:
 
 ```sh
-condor_submit condor.submit
+# 1 cores, 12 GB of memory and disk
+../../utils/condor_vine_workers --cores 1 --memory 12000 --disk 12000 IP_OF_MANAGER PORT_OF_MANAGER 500
 ```
+
+Or using names:
+
+```sh
+# 1 cores, 12 GB of memory and disk
+../utils/condor_vine_worker --cores 1 --memory 12000 --disk 12000 -M MANAGER_NAME 500
+```
+
 
 ### Example of submission file for SLURM
 
@@ -146,11 +157,12 @@ the batch system with something like:
 ```sh
 sbatch --job-name vine_worker  --ntasks=1 --nodes=1  --mem 0 --time 2:00:00 --account=ACCOUNT -- <<EOF
 #!/bin/sh
+. ../../taskvine-env/activate
 vine_worker --cores 64 -M vine-blast-$USER
 EOF
 ```
 
-Change the time and account arguments as apropriate for your site.
+Change the time and account arguments as appropriate for your site.
 
 
 ## Plotting the results

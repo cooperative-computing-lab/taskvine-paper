@@ -83,7 +83,6 @@ def batch_gradient_descent(train_data, test_data, number_of_params, max_iteratio
 
 def main(name, port, number_of_params, max_iterations, min_error, learning_rate, num_tasks):
     m = vine.Manager(name=name, port=port)
-    print("listening on port", m.port)
 
     # enable peer transfers to speed up Library environment delivery
     m.enable_peer_transfers()
@@ -135,6 +134,8 @@ def main(name, port, number_of_params, max_iterations, min_error, learning_rate,
     # keep track of the best set of weights and the lowest error
     best_weights = []
     best_error = float('inf')
+
+    print(f"TaskVine listening for workers on port {m.port}")
 
     print("waiting for tasks to complete...")
     while not m.empty():

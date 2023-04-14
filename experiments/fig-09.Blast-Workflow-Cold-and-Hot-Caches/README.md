@@ -151,18 +151,6 @@ Or using names:
 ```
 
 
-### Example Of Submissions To SLURM
-
-The file `condor.submit` show how to submit a worker to a generic HTCondor
-pool. Modify the `arguments` line to match the name or IP address of your
-manager. To request 100 workers, change `queue 1` to `queue 100`.
-
-And then run:
-
-```sh
-condor_submit condor.submit
-```
-
 ### Example of submission file for SLURM
 
 For SLURM, check with your system administrators how many cores the compute
