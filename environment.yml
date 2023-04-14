@@ -3,6 +3,6 @@ channels:
   - conda-forge
 dependencies:
   - python=3.10
-  - ndcctools=7.5.1
+  - ndcctools=7.5.2
   - matplotlib
   - pandas
