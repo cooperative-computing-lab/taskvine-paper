@@ -21,7 +21,7 @@ terminal we will execute the manager, and in the second a local worker. In **bot
 terminals you will need to activate the conda environment:
 
 ```sh
-conda activate ../../taskvine-env
+conda activate $(realpath ../../taskvine-env)
 ```
 
 If you get an error, please make sure that you executed the `setup-taskvine`
