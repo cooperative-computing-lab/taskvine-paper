@@ -222,22 +222,16 @@ set_up_working_directory()
 	# Copy the worker executable into the temporary directory,
 	# for similar reasons.
 
-	worker=`which vine_worker 2>/dev/null`
+	poncho=`which poncho_package_run 2>/dev/null`
 	if [ $? != 0 ]
 	then
-		echo "$0: please add 'vine_worker' to your PATH." 1>&2
+		echo "$0: please add 'poncho_package_run' to your PATH." 1>&2
 		exit 1
 	fi
 
-	gpu_detection=`which cctools_gpu_autodetect 2>/dev/null`
-	if [ $? != 0 ]
-	then
-		echo "$0: could not find cctools_gpu_autodetect in PATH. gpus will not be automatically detected." 1>&2
-	else
-		cp $gpu_detection ${submit_dir}
-	fi
+    cp $poncho ${submit_dir}
+    cp ${SCRIPT_DIR}/../taskvine-env.tar.gz ${submit_dir}
 
-    cp $worker ${submit_dir}
 	set_up_password_file_common
 
 	cd ${submit_dir}

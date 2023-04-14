@@ -8,7 +8,7 @@ then
 	echo "Could not find 'vine_submit_common'" 1>&2
 	exit 1
 else
-    ENVIRONMENT="${SCRIPT_DIR}/../taskvine-env"
+    export ENVIRONMENT="${SCRIPT_DIR}/../taskvine-env"
     . ${ENVIRONMENT}/bin/activate ""
 	. $SUBMIT_COMMON
 fi
@@ -67,7 +67,10 @@ submit_workers_command()
 		to_submit=$((to_submit-1))
 		sbatch --job-name vine_worker --ntasks=1 --nodes=1 $slurm_parameters <<EOF
 #!/bin/sh
+#
+. ${ENVIRONMENT}/bin/activate ""
 vine_worker $arguments $host $port
+
 EOF
 	done
 

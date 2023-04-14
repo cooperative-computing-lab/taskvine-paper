@@ -8,7 +8,7 @@ then
 	echo "Could not find 'vine_submit_common'" 1>&2
 	exit 1
 else
-    ENVIRONMENT="${SCRIPT_DIR}/../taskvine-env"
+    export ENVIRONMENT="${SCRIPT_DIR}/../taskvine-env"
     . ${ENVIRONMENT}/bin/activate ""
 	. $SUBMIT_COMMON
 fi
@@ -28,8 +28,9 @@ show_help()
 
 requirements=""
 class_ads=""
-transfer_input_files=vine_worker
+transfer_input_files=poncho_package_run,taskvine-env.tar.gz
 submit_dir=/tmp/${USER}-workers
+
 parse_arguments()
 {
 	# set default values:
@@ -111,8 +112,8 @@ EOF
     fi
 
 	cat >> condor_submit_file <<EOF
-executable = vine_worker
-arguments = $arguments $host $port
+executable = poncho_package_run
+arguments = -u taskvine-env -e taskvine-env.tar.gz -- vine_worker $arguments $host $port
 transfer_input_files = ${transfer_input_files}
 should_transfer_files = yes
 when_to_transfer_output = on_exit
