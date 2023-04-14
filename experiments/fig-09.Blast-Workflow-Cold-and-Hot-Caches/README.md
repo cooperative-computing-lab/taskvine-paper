@@ -21,7 +21,7 @@ terminal we will execute the manager, and in the second a local worker. In **bot
 terminals you will need to activate the conda environment:
 
 ```sh
-conda activate $(realpath ../../taskvine-env)
+. ../../taskvine-env/activate
 ```
 
 If you get an error, please make sure that you executed the `setup-taskvine`
@@ -96,6 +96,7 @@ single worker such as:
 
 ```sh
 # 4 cores, 12 GB of memory and disk
+. ../../taskvine-env/activate
 vine_worker --cores 4 --memory 12000 --disk 12000 IP_OF_MANAGER PORT_OF_MANAGER
 ```
 
@@ -104,6 +105,7 @@ University of Notre Dame, and use:
 
 ```sh
 # 4 cores, 12 GB of memory and disk
+. ../../taskvine-env/activate
 vine_worker --cores 4 --memory 12000 --disk 12000 -M MANAGER_NAME
 ```
 
@@ -131,8 +133,25 @@ and submit 100 workers. The run with cold cache should complete in 5min once the
 Once the run finishes, re-run it to test the hot cache. It should run in about 2min.
 
 
+### Example Of Submissions To HTCondor
 
-### Example Of Submission File To HTCondor
+If your HTCondor does not have special requirements, the generic script
+provided may help you to submit the workers required, as:
+
+```sh
+# 4 cores, 12 GB of memory and disk
+../../utils/condor_vine_workers --cores 4 --memory 12000 --disk 12000 IP_OF_MANAGER PORT_OF_MANAGER 100
+```
+
+Or using names:
+
+```sh
+# 4 cores, 12 GB of memory and disk
+../utils/condor_vine_worker --cores 4 --memory 12000 --disk 12000 -M MANAGER_NAME 100
+```
+
+
+### Example Of Submissions To SLURM
 
 The file `condor.submit` show how to submit a worker to a generic HTCondor
 pool. Modify the `arguments` line to match the name or IP address of your
@@ -153,6 +172,7 @@ worker as:
 ```sh
 sbatch --job-name vine_worker --ntasks=1 --nodes=1  --cpus-per-task 64 --mem 0 --time 2:00:00 --account=ACCOUNT -- <<EOF
 #!/bin/sh
+. ../../taskvine-env/activate
 vine_worker --cores 64 -M vine-blast-$USER
 EOF
 ```
