@@ -12,8 +12,8 @@ to run at scale to reproduce the results in the paper.
 ## To reproduce the figures in the paper, you can run:  
 
 ```sh
-utils/plot_bgd --mode tasks paper_results/c.bgd.transactions  c.bgd.tasks.pdf
-utils/plot_bgd --mode workers paper_results/c.bgd.transactions  c.bgd.workers.pdf
+plot_bgd --mode tasks paper_results/c.bgd.transactions  c.bgd.tasks.pdf
+plot_bgd --mode workers paper_results/c.bgd.transactions  c.bgd.workers.pdf
 ```
 
 ## Small Run
@@ -142,7 +142,7 @@ Or using names:
 
 ```sh
 # 2 cores, 12 GB of memory and disk
-../utils/condor_vine_worker --cores 2 --memory 12000 --disk 12000 -M MANAGER_NAME 500
+../../utils/condor_vine_worker --cores 2 --memory 12000 --disk 12000 -M MANAGER_NAME 500
 ```
 
 
