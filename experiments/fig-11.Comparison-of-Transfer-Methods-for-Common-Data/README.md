@@ -30,7 +30,7 @@ execute local workers. In the **three** terminals you will need to activate the
 conda environment:
 
 ```sh
-source ../../taskvine-env/bin/activate
+. ../../taskvine-env/bin/activate
 ```
 
 If you get an error, please make sure that you executed the `setup-taskvine`
@@ -95,7 +95,7 @@ system that will let you run 500 1-core workers. Each batch job will run a
 single worker such as:
 
 ```sh
-source ../../taskvine-env/bin/activate
+. ../../taskvine-env/bin/activate
 
 # 1 cores, 12 GB of memory and disk
 vine_worker --cores 1 --memory 12000 --disk 12000 IP_OF_MANAGER PORT_OF_MANAGER
@@ -105,7 +105,7 @@ Alternatively, you can use the catalog server service provided by the
 University of Notre Dame, and use:
 
 ```sh
-source ../../taskvine-env/bin/activate
+. ../../taskvine-env/bin/activate
 
 # 1 cores, 12 GB of memory and disk
 vine_worker --cores 1 --memory 12000 --disk 12000 -M MANAGER_NAME

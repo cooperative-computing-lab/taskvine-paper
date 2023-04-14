@@ -66,18 +66,9 @@ source $(realpath taskvine-env/bin/activate)
 if ! conda-pack --output taskvine-env.tar.gz
 then
     decho "Could not pack environment."
-    decho "This is only a problem if you wanted to submit remote workers in a batch system."
+    decho "This is only a problem if you wanted to submit remote workers to"
+    decho "a batch system without a shared file system."
 fi
-
-cat <<EOF
-    TaskVine conda environment installed succesfully.
-    If conda is in your PATH, activate with:
-        conda activate -p $(realpath taskvine-env)
-    Otherwise, with:
-        source \$(realpath taskvine-env/bin/activate)
-
-    cd to experiments/fig-* directories to reproduce the papers results
-EOF
 
 cat <<EOF
     TaskVine conda environment installed succesfully.
