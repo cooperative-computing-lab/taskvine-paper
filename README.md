@@ -20,9 +20,11 @@ these applications work on top of TaskVine.
 - Familiarty with the Linux command line.
 - Familiarty with submitting jobs to a batch system.
 
-### Software
+### Resources
 
-- Linux, x86_64 (amd64)
+- Linux, x86\_64 (amd64)
+- 5GB of local disk for all but one experiment.
+- 40GB of local disk for ColmenaXTB experiment.
 - Conda:
     Install from `https://docs.conda.io/en/latest/miniconda.html`
     You don't need to let conda modify your shell initialization script if
