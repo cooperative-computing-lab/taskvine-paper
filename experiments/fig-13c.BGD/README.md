@@ -162,8 +162,8 @@ EOF
 
 Change the time and account arguments as appropriate for your site. To more
 closely reproduce the results in the paper you will need to launch as many
-workers as to get close to 4x100 = 400 cores. (E.g., with 64-core workers, we
-would between 6 and 7 workers).
+workers as to get close to 2x500 = 1000 cores. (E.g., with 64-core workers, we
+would between 15 and 16 workers).
 
 ## Plotting the results
 
