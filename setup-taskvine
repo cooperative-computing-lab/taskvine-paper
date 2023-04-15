@@ -1,6 +1,5 @@
 #! /bin/bash
 
-
 decho () {
     echo "$@" 1>&2
 }
@@ -62,13 +61,15 @@ fi
 
 echo "Packing environment for remote execution..."
 
+rm -f taskvine-env.tar.gz
 source $(realpath taskvine-env/bin/activate)
 if ! conda-pack --output taskvine-env.tar.gz
 then
-    decho "Could not pack environment."
-    decho "This is only a problem if you wanted to submit remote workers to"
-    decho "a batch system without a shared file system."
+    decho "Could not pack environment!"
+    exit 1
 fi
+
+ln -s ../../taskvine-env.tar.gz  experiments/fig-10.Independent-Tasks-vs-Shared-Mini-Tasks
 
 cat <<EOF
     TaskVine conda environment installed succesfully.
