@@ -35,8 +35,8 @@ This 20 second wait produces a graph with a distractingly long task execution ti
 can be done using the included program plot\_txn\_remove\_delay instead of vine\_plot\_txn\_log.
 
 ```sh
-vine_plot_txn_log --mode tasks --origin dispatched-first-task paper_results/sharedfs_transactions a.pdf
-vine_plot_txn_log --mode tasks --origin dispatched-first-task paper_results/peer_transfer_transactions b.pdf
+plot_txn_remove_delay --mode tasks paper_results/sharedfs_transactions a.pdf
+plot_txn_remove_delay --mode tasks paper_results/peer_transfer_transactions b.pdf
 ```
 
 ### Executing The Manager, Shared FS run (Time to run: ~2min)
