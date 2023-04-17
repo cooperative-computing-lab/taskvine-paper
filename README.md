@@ -36,7 +36,9 @@ these applications work on top of TaskVine.
 All the setup can be done in your `$HOME` directory, thus no admin privileges
 are needed.
 
-1. First, create the conda environment for TaskVine:
+1. First, create the conda environment for TaskVine with the script
+   `setup-taskvine`. This script will not modify anything outside the current
+   directory:
 
 ```sh
 ./setup-taskvine
