@@ -2,7 +2,7 @@
 
 This experiment shows how TaskVine can use a task to install functions at a
 worker -called Libraries- to which function calls can be made -called
-LibraryCalls-. The initialization cost, e.g. that of a python interpreter, is
+FunctionCalls-. The initialization cost, e.g. that of a python interpreter, is
 only paid by the Library installation.
 
 The experiment is divided in two. First we will show a smaller run with a local
@@ -82,7 +82,7 @@ log file for this run will be present in
 `vine-run-info/most-recent/vine-logs/transactions`
 
 Note that if now you re-run the manager, the workflow should finish in less
-than 30s as the environment for the LibraryCall's is already built and cached.
+than 30s as the environment for the FunctionCall's is already built and cached.
 
 
 ## Large Run (between 1 and 5min)
