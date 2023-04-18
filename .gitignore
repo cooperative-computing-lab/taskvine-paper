@@ -1,0 +1,8 @@
+*.pdf
+*.png
+*.root
+*.tar.gz
+*-workers/
+taskvine-env/
+vine-run-info/
+git-repos/
