@@ -1,27 +1,26 @@
 #!/usr/bin/env python
 
-import lz4.frame as lz4f
-import pickle
 import json
 import time
 import cloudpickle
 import gzip
 import os
-from optparse import OptionParser
 
-import uproot
 import numpy as np
 from coffea import hist, processor
-from coffea.util import load, save
 from coffea.nanoevents import NanoAODSchema
 
 import topeft
 import topcoffea.modules.utils as utils
-from topcoffea.modules import samples
-from topcoffea.modules import fileReader
 from topcoffea.modules.dataDrivenEstimation import DataDrivenProducer
 from topcoffea.modules.get_renormfact_envelope import get_renormfact_envelope
 import topcoffea.modules.remote_environment as remote_environment
+
+import warnings
+import atexit
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)  # still using old-style histograms
+atexit.register(lambda: print("\x1b[?25h"))  # restabish cursor from rich
 
 WGT_VAR_LST = [
     "nSumOfWeights_ISRUp",
