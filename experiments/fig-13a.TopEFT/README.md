@@ -1,4 +1,3 @@
-
 # Taskvine Executing a High Energy Physics Workflow
 
 This experiment shows how TaskVine can be used to run topEFT, which is high
@@ -11,7 +10,7 @@ make a run with minimal local data.
 
 ```sh
 # activate environment to get access to vine_plot_txn_log
-sourcsource ./activate-environment
+source ./activate-environment
 
 vine_plot_txn_log --mode workers paper_results/a.topeft.transactions workers.pdf
 vine_plot_txn_log --mode tasks paper_results/a.topeft.transactions tasks.pdf
@@ -31,7 +30,7 @@ To run this experiment, you need to download a data file with collision events.
 This file is 151 MB:
 
 ```sh
-mkdir -p topeft_data && curl -C - -L -O https://zenodo.org/record/7838574/files/ttHJet_UL17_R1B14_NAOD-00000_10194_NDSkim.root
+(mkdir -p topeft_data && cd topeft_data && curl -C - -L -O https://zenodo.org/record/7838574/files/ttHJet_UL17_R1B14_NAOD-00000_10194_NDSkim.root)
 ```
 
 ## Small Run
