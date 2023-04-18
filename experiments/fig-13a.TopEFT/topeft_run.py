@@ -230,7 +230,8 @@ executor_args = {
     'stats_log': 'stats.log',
     'tasks_accum_log': 'tasks.log',
 
-    'environment_file': remote_environment.get_environment(),
+    # 'environment_file': remote_environment.get_environment(),
+    'environment_file': 'taskvine-env.tar.gz',
     'extra_input_files': ["topeft.py"],
 
     'retries': 5,
