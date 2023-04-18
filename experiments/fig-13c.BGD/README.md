@@ -12,8 +12,9 @@ to run at scale to reproduce the results in the paper.
 ## To reproduce the figures in the paper, you can run:  
 
 ```sh
-plot_bgd --mode tasks paper_results/c.bgd.transactions  c.bgd.tasks.pdf
-plot_bgd --mode workers paper_results/c.bgd.transactions  c.bgd.workers.pdf
+source ./activate-environment
+./plot_bgd --mode tasks paper_results/c.bgd.transactions  c.bgd.tasks.pdf
+./plot_bgd --mode workers paper_results/c.bgd.transactions  c.bgd.workers.pdf
 ```
 
 ## Small Run
@@ -36,6 +37,7 @@ script at the root directory of this repository.
 In the first terminal run:
 
 ```sh
+source ./activate-environment
 python vine_run_bgd.py --tasks 20
 ```
 
@@ -114,6 +116,7 @@ We recommend first to run a short example before running with the full 200
 workers. For this, simply re-run:
 
 ```sh
+source ./activate-environment
 python vine_run_bgd.py --tasks 20
 ```
 
@@ -134,6 +137,7 @@ If your HTCondor does not have special requirements, the generic script
 provided may help you to submit the workers required, as:
 
 ```sh
+source ./activate-environment
 # 2 cores, 12 GB of memory and disk
 ../../utils/condor_vine_workers --cores 2 --memory 12000 --disk 12000 IP_OF_MANAGER PORT_OF_MANAGER 500
 ```
@@ -176,6 +180,7 @@ For plotting we are interested in the transactions log:
 
 
 ```sh
+source ./activate-environment
 vine_plot_txn_log --mode workers vine-run-info/most-recent/vine-logs/transactions worker.pdf
 vine_plot_txn_log --mode tasks   vine-run-info/most-recent/vine-logs/transactions tasks.pdf
 ```

@@ -11,6 +11,7 @@ to run at scale to reproduce the results in the paper.
 ## To reproduce the figures in the paper, you can run:  
 
 ```sh
+source ./activate-environment
 ./plot_poncho --mode tasks paper_results/a.independent-tasks.transactions independent.pdf
 ./plot_pondho --mode tasks paper_results/b.shared-minitasks.transactions shared-minitasks.pdf
 ```
@@ -35,6 +36,7 @@ script at the root directory of this repository.
 In the first terminal run:
 
 ```sh
+source ./activate-environment
 python vine_example_poncho.py --mode share-minitasks --tasks 10
 ```
 
@@ -77,6 +79,7 @@ The log file for this run will be present in `vine-run-info/most-recent/vine-log
 Now go back to the first terminal and run:
 
 ```sh
+source ./activate-environment
 python vine_example_poncho.py --mode independent --tasks 10
 ```
 
@@ -119,6 +122,7 @@ We recommend first to run a short example before running with the full 50
 workers. For this, simply re-run:
 
 ```sh
+source ./activate-environment
 ./vine_example_poncho.py --task-count 10
 ```
 
@@ -141,6 +145,7 @@ If your HTCondor does not have special requirements, the generic script
 provided may help you to submit the workers required, as:
 
 ```sh
+source ./activate-environment
 # 4 cores, 12 GB of memory and disk
 ../../utils/condor_vine_workers --cores 4 --memory 12000 --disk 12000 IP_OF_MANAGER PORT_OF_MANAGER 50
 ```
@@ -182,6 +187,7 @@ manager that executed last.
 For plotting we are interested in the transactions log:
 
 ```sh
+source ./activate-environment
 vine_plot_txn_log --mode workers vine-run-info/most-recent/vine-logs/transactions worker.pdf
 vine_plot_txn_log --mode tasks   vine-run-info/most-recent/vine-logs/transactions tasks.pdf
 ```

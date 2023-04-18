@@ -17,6 +17,7 @@ communication between worker nodes is required.
 ## To reproduce the figures in the paper, you can run:  
 
 ```sh
+source ./activate-environment
 vine_plot_txn_log --mode tasks --origin dispatched-first-task paper_results/a.worker-url.transactions  a.pdf
 vine_plot_txn_log --mode tasks --origin dispatched-first-task paper_results/b.worker-to-worker-without-supervision.transactions b.pdf
 vine_plot_txn_log --mode tasks --origin dispatched-first-task paper_results/c.worker-to-worker-limited-by-manager.transactions c.pdf
@@ -45,6 +46,7 @@ cannot be detected.
 In the first terminal execute:
 
 ```sh
+source ./activate-environment
 python manager.py --disable-peer-transfers
 ```
 
@@ -66,6 +68,7 @@ the previous step.
 In the first terminal execute:
 
 ```sh
+source ./activate-environment
 python manager.py --max-concurrent-transfers 9999
 ```
 
@@ -118,6 +121,7 @@ by running `python manager.py --name some-other-manager-name`.
 To run the complete experiment, run in sequence:
 
 ```sh
+source ./activate-environment
 python manager.py --worker-count 500 --disable-peer-transfers
 
 python manager.py --worker-count 500 --max-concurrent-transfers 9999
@@ -142,6 +146,7 @@ provided may help you to submit the workers required, as:
 Or using names:
 
 ```sh
+source ./activate-environment
 # 1 cores, 12 GB of memory and disk
 ../utils/condor_vine_worker --cores 1 --memory 12000 --disk 12000 -M MANAGER_NAME 500
 ```
@@ -176,5 +181,6 @@ For plotting we are interested in the transactions log:
 
 
 ```sh
+source ./activate-environment
 vine_plot_txn_log --mode tasks --origin dispatched-first-task vine-run-info/most-recent/vine-logs/transactions output.pdf
 ```

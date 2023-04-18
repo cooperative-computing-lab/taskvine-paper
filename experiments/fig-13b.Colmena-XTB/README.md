@@ -14,6 +14,7 @@ run scripts and molecular and machine learning datasets and should take around
 ## To reproduce the figures in the paper, you can run:
 
 ```sh
+source ./activate-environment
 vine_plot_txn_log --mode workers paper_results/b.colmena-xtb.transactions workers.pdf
 vine_plot_txn_log --mode tasks paper_results/b.colmena-xtb.transactions tasks.pdf
 ```

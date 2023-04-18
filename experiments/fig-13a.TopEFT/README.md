@@ -53,6 +53,7 @@ script at the root directory of this repository.
 In the first terminal run:
 
 ```sh
+source ./activate-environment
 python topeft_run.py cfgs/UL17_private_ttH_for_CI.json -s 2500
 ```
 

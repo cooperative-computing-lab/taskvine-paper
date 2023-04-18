@@ -10,6 +10,7 @@ to run at scale to reproduce the results in the paper.
 ## To reproduce the figures in the paper, you can run:  
 
 ```sh
+source ./activate-environment
 plot_txn_log_as_in_paper paper_results/a.cold-cache.transactions cold.pdf
 plot_txn_log_as_in_paper paper_results/b.hot-cache.transactions hot.pdf
 ```
@@ -32,6 +33,7 @@ script at the root directory of this repository.
 In the first terminal run:
 
 ```sh
+source ./activate-environment
 python vine_example_blast.py
 ```
 
@@ -57,6 +59,7 @@ the manager pick a free port.
 In the second terminal run:
 
 ```sh
+source ./activate-environment
 vine_worker -dall --cores 4 -b 30  localhost 9123
 ```
 
@@ -78,6 +81,7 @@ it has the data needed already cached.
 Go back to to the first terminal and re-run the manager with:
 
 ```sh
+source ./activate-environment
 python vine_example_blast.py
 ```
 
@@ -117,6 +121,7 @@ We recommend first to run a short example before running with the full 100
 workers. For this, simply re-run:
 
 ```sh
+source ./activate-environment
 vine_example_blast.py
 ```
 
@@ -125,6 +130,7 @@ and submit a single worker as appropriate for your batch system.
 To run the complete experiment, run:
 
 ```sh
+source ./activate-environment
 vine_example_blast.py --task-count 1000
 ```
 
@@ -139,6 +145,7 @@ If your HTCondor does not have special requirements, the generic script
 provided may help you to submit the workers required, as:
 
 ```sh
+source ./activate-environment
 # 4 cores, 12 GB of memory and disk
 ../../utils/condor_vine_workers --cores 4 --memory 12000 --disk 12000 IP_OF_MANAGER PORT_OF_MANAGER 100
 ```
@@ -146,6 +153,7 @@ provided may help you to submit the workers required, as:
 Or using names:
 
 ```sh
+source ./activate-environment
 # 4 cores, 12 GB of memory and disk
 ../../utils/condor_vine_worker --cores 4 --memory 12000 --disk 12000 -M MANAGER_NAME 100
 ```
@@ -181,6 +189,7 @@ For plotting we are interested in the transactions log:
 
 
 ```sh
+source ./activate-environment
 vine_plot_txn_log vine-run-info/most-recent/vine-logs/transactions output.pdf
 ```
 
