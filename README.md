@@ -45,17 +45,10 @@ are needed.
 ```
 
 2. For every terminal related to the experiments you will need to activate this
-   environment. If conda did not update your shell initialization file, you can
-   do:
+   environment:
 
 ```sh
-source taskvine-env/bin/activate
-```
-
-Otherwise, you can use the conda command:
-
-```sh
-conda activate -p taskvine-env
+source activate-environment
 ```
 
 

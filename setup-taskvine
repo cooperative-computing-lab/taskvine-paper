@@ -105,6 +105,7 @@ then
 fi
 
 ln -sf ../../taskvine-env.tar.gz  experiments/fig-10.Independent-Tasks-vs-Shared-Mini-Tasks
+ln -sf ../../taskvine-env.tar.gz  experiments/fig-13a.TopEFT
 
 cat <<EOF
 

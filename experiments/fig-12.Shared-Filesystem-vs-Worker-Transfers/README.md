@@ -85,7 +85,7 @@ the batch system with something like:
 ```sh
 sbatch --job-name vine_worker  --ntasks=1 --nodes=100  --mem 0 --time 2:00:00 --account=ACCOUNT -- <<EOF
 #!/bin/sh
-. ../../taskvine-env/activate
+source ./activate-environment
 vine_worker --cores 64 -M vine-blast-$USER
 EOF
 ```

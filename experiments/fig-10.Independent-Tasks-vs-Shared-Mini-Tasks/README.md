@@ -22,7 +22,7 @@ terminal we will execute the manager, and in the second a local worker. In **bot
 terminals you will need to activate the conda environment:
 
 ```sh
-. ../../taskvine/bin/activate
+source ./activate-environment
 ```
 
 If you get an error, please make sure that you executed the `setup-taskvine`
@@ -95,7 +95,7 @@ system that will let you run 50 4-core workers. Each batch job will run a
 single worker such as:
 
 ```sh
-. ../../taskvine-env/bin/activate
+source ./activate-environment
 
 # 4 cores, 12 GB of memory and 12 GB of disk
 vine_worker --cores 4 --memory 12000 --disk 12000 IP_OF_MANAGER PORT_OF_MANAGER
@@ -105,7 +105,7 @@ Alternatively, you can use the catalog server service provided by the
 University of Notre Dame, and use:
 
 ```sh
-. ../../taskvine-env/bin/activate
+source ./activate-environment
 
 # 4 cores, 12 GB of memory and 12 GB of disk
 vine_worker --cores 4 --memory 12000 --disk 12000 -M MANAGER_NAME
@@ -162,7 +162,7 @@ worker as:
 ```sh
 sbatch --job-name vine_worker --ntasks=1 --nodes=1  --cpus-per-task 64 --mem 0 --time 2:00:00 --account=ACCOUNT -- <<EOF
 #!/bin/sh
-. ../../taskvine-env/activate
+source ./activate-environment
 vine_worker --cores 64 -M vine-blast-$USER
 EOF
 ```
