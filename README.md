@@ -25,11 +25,7 @@ these applications work on top of TaskVine.
 - Linux, x86\_64 (amd64)
 - 5GB of local disk for all but one experiment.
 - 40GB of local disk for ColmenaXTB experiment.
-- Conda:
-    Install from `https://docs.conda.io/en/latest/miniconda.html`
-    You don't need to let conda modify your shell initialization script if
-    installing to the default `$HOME/miniconda3`. Otherwise you need to add
-    `conda` to your `PATH`. 
+
 
 ## Setup (Time to run: 10min)
 
@@ -38,7 +34,8 @@ are needed.
 
 1. First, create the conda environment for TaskVine with the script
    `setup-taskvine`. This script will not modify anything outside the current
-   directory:
+   directory. It will download the python package manager `conda` if it cannot
+   find a local installation.
 
 ```sh
 ./setup-taskvine
