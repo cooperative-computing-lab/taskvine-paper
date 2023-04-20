@@ -1,0 +1,15 @@
+#! /bin/bash
+
+if ! (return 0 2>/dev/null) 
+then
+    echo This script cannot be execute directly and should be sourced. E.g.: 
+    echo source "${BASH_SOURCE[0]}"
+    exit 1
+fi
+
+SCRIPT_DIR=$( cd -- "$( dirname -- $(realpath "${BASH_SOURCE[0]}") )" &> /dev/null && pwd )
+ENVIRONMENT="${SCRIPT_DIR}/taskvine-env"
+
+source $(realpath "${ENVIRONMENT}/bin/activate")
+
+echo "Environment taskvine-env activated."
