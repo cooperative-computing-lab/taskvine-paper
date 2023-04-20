@@ -1,4 +1,7 @@
 #! /bin/bash
+#
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+ENVIRONMENT="${SCRIPT_DIR}/taskvine-env"
 
 decho () {
     echo "$@" 1>&2
@@ -13,7 +16,10 @@ verbose () {
 
 
 find_conda () {
-    if which mamba >& /dev/null
+    if [[ -x ${SCRIPT_DIR}/miniconda3/bin/conda ]]
+    then
+        echo ${SCRIPT_DIR}/miniconda3/bin/conda
+    elif which mamba >& /dev/null
     then
         which mamba
     elif which conda >& /dev/null
@@ -23,12 +29,14 @@ find_conda () {
     then
         echo ${HOME}/miniconda3/bin/conda
     else
+        set -e
         decho "Could not find conda."
-        decho "Please install conda from: https://docs.conda.io/en/latest/miniconda.html"
-        decho "or make sure that it can be found in your PATH"
-        decho "If you install conda to the default \${HOME}/miniconda3, this script will"
-        decho "detect that and you will not need to let conda modify your .bashrc (or similar init file)."
-        exit 1
+        decho "Fetching miniconda..."
+        curl -C - -L -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh 1>&2
+        decho "Installing miniconda at: ${SCRIPT_DIR}/miniconda3"
+        sh Miniconda3-latest-Linux-x86_64.sh -b -p ${SCRIPT_DIR}/miniconda3 -s 1>&2
+        set +e
+        echo ${SCRIPT_DIR}/miniconda3/bin/conda
     fi
 }
 
@@ -50,10 +58,8 @@ create_environment () {
     return $?
 }
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-ENVIRONMENT="${SCRIPT_DIR}/taskvine-env"
-
 CONDA=$(find_conda)
+echo using conda at $CONDA
 
 if ! create_environment "${CONDA}" "${ENVIRONMENT}" environment.yml
 then
@@ -111,10 +117,8 @@ cat <<EOF
 
 
     TaskVine conda environment installed succesfully.
-    If conda is in your PATH, activate with:
-        conda activate -p $(realpath taskvine-env)
-    Otherwise, with:
-        source $(realpath taskvine-env/bin/activate)
+    Activate the environment with:
+    source ./activate-environment
 
     cd to experiments/fig-* directories to reproduce the papers results
 EOF
