@@ -1,3 +1,6 @@
+[![DOI](https://zenodo.org/badge/613401833.svg)](https://zenodo.org/badge/latestdoi/613401833)
+
+
 # TaskVine: Managing In-Cluster Data for High-Throughput Data Intensive Workflows
 
 This repository describes how to setup a TaskVine installation to reproduce the
