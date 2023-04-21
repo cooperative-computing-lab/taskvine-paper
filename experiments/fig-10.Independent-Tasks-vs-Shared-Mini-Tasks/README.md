@@ -13,7 +13,7 @@ to run at scale to reproduce the results in the paper.
 ```sh
 source ./activate-environment
 ./plot_poncho --mode tasks paper_results/a.independent-tasks.transactions independent.pdf
-./plot_pondho --mode tasks paper_results/b.shared-minitasks.transactions shared-minitasks.pdf
+./plot_poncho --mode tasks paper_results/b.shared-minitasks.transactions shared-minitasks.pdf
 ```
 
 ## Small Run
@@ -37,7 +37,7 @@ In the first terminal run:
 
 ```sh
 source ./activate-environment
-python vine_example_poncho.py --mode share-minitasks --tasks 10
+python vine_example_poncho.py --mode shared-minitasks --task-count 10
 ```
 
 After the submission messages, look for a message like this:

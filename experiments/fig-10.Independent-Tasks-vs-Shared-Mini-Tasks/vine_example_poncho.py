@@ -30,7 +30,7 @@ def main(name, port, mode, tasks):
     m.set_name(name)
 
     script = m.declare_file("script.py", cache=True)
-    poncho_tarball = m.declare_file("poncho_tarball.tar.gz", cache=True)
+    poncho_tarball = m.declare_file("taskvine-env.tar.gz", cache=True)
     poncho_env = m.declare_poncho(poncho_tarball, cache=True)
 
     for i in range(tasks):
