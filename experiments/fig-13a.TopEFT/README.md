@@ -54,7 +54,7 @@ In the first terminal run:
 
 ```sh
 source ./activate-environment
-python topeft_run.py cfgs/UL17_private_ttH_for_CI.json -s 2500
+python topeft_run.py topeft_cfg.json -s 2500
 ```
 
 This will execute a small topEFT workflow using the local file we just
@@ -95,7 +95,7 @@ For plotting we are interested in the transactions log:
 
 ```sh
 source ./activate-environment
-vine_plot_txn_log --mode workers vine-run-info/most-recent/vine-logs/transactions worker.pdf
-vine_plot_txn_log --mode tasks   vine-run-info/most-recent/vine-logs/transactions tasks.pdf
+./plot_topeft --mode workers vine-run-info/most-recent/vine-logs/transactions worker.pdf
+./plot_topeft --mode tasks   vine-run-info/most-recent/vine-logs/transactions tasks.pdf
 ```
 
