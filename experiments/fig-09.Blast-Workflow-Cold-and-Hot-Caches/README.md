@@ -11,8 +11,8 @@ to run at scale to reproduce the results in the paper.
 
 ```sh
 source ./activate-environment
-plot_txn_log_as_in_paper paper_results/a.cold-cache.transactions cold.pdf
-plot_txn_log_as_in_paper paper_results/b.hot-cache.transactions hot.pdf
+./plot_txn_log_as_in_paper paper_results/a.cold-cache.transactions cold.pdf
+./plot_txn_log_as_in_paper paper_results/b.hot-cache.transactions hot.pdf
 ```
 
 ## Small Run
@@ -155,7 +155,7 @@ Or using names:
 ```sh
 source ./activate-environment
 # 4 cores, 12 GB of memory and disk
-../../utils/condor_vine_worker --cores 4 --memory 12000 --disk 12000 -M MANAGER_NAME 100
+../../utils/condor_vine_workers --cores 4 --memory 12000 --disk 12000 -M MANAGER_NAME 100
 ```
 
 
