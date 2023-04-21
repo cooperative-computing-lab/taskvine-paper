@@ -148,7 +148,7 @@ Or using names:
 ```sh
 source ./activate-environment
 # 1 cores, 12 GB of memory and disk
-../utils/condor_vine_worker --cores 1 --memory 12000 --disk 12000 -M MANAGER_NAME 500
+../../utils/condor_vine_workers --cores 1 --memory 12000 --disk 12000 -M MANAGER_NAME 500
 ```
 
 
